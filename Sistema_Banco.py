@@ -85,4 +85,4 @@ def main():
     if verificar_banco(banco):
         print("----BEM VINDO AO ATENDIMENTO CAIXA----")
 
-        #FINALIZAR A VERIFICAÇAO, E AINDA POR WHILE NO FINALgi
+        #FINALIZAR A VERIFICAÇAO, E AINDA POR WHILE NO FINAL
