@@ -1,3 +1,4 @@
+#MATHEUS GABRIEL, IURY ALVES E GABRIEL NEVES
 import os
 
 def limpar_terminal():
