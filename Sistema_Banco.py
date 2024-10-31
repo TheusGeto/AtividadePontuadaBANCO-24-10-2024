@@ -27,6 +27,34 @@ def exibir_saldo(saldo):
     print(f"Seu Saldo atual é R${saldo} ")
 
 #FAZER AQUI DEFs: realizar_saque(saldo), realizar_transferencia(saldo), realizar_deposito(saldo)
+def realizar_saque(saldo):
+    valor = float(input("digite o valor do saque"))
+    if valor <= saldo:
+        saldo -= valor
+        print("}}}} saque efetuado com sucesso {{{{")
+        print(f"seu novo saldo {saldo}")
+    else:
+        print("****SALDO INSUFICIENTE****")
+
+def realizar_transferencia(saldo):
+    valor = float(input("digite o valor da transferencia"))
+    if valor <= saldo:
+        saldo -= valor
+        print("}}}} transferencia efetuada com sucesso {{{{")
+        print(f"seu novo saldo {saldo}")
+    else:
+        print("****SALDO INSUFICIENTE****")
+
+def realizar_deposito(saldo):
+    valor = float(input("Digite o valor do deposito: "))
+    conta = input("digite o numero da conta: ")
+    agencia =  input("Digite sua agencia: ")
+    confirmar = int(input(f"confirma o valor do deposito de ${valor} (1: sim, 2: nâo"))
+    if confirmar == 1:
+        saldo += valor
+        print("}}}} deposito efetuado com sucesso {{{{")
+        print("seu novo saldo é R$: {saldo}")
+    return saldo
 
 def consulta_rendimento(saldo):
     taxa_rendimento = 0.005  
