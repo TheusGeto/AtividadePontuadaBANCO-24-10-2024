@@ -101,4 +101,4 @@ def main():
         print("Banco inválido. Esse serviço é válido apenas para o banco Caixa.")
 
 if __name__ == "__main__":
-    main()
+    main() #executa
