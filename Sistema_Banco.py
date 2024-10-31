@@ -1,9 +1,9 @@
 import os
 
 def limpar_terminal():
-    os.system("'cls' if os.name == 'nt' else 'clear'")
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-def mostrar_menu(): # Exibe o menu de opções e retorna a escolha do usuário
+def mostrar_menu(): 
     limpar_terminal()
     print("\nMENU")
     print("1 - SALDO")
@@ -11,10 +11,11 @@ def mostrar_menu(): # Exibe o menu de opções e retorna a escolha do usuário
     print("3 - DEPOSITO")
     print("4 - TRANSFERENCIA")
     print("5 - CONSULTA DE RENDIMENTO")
-    print("0- SAIR...")
-    opçao = int("Digite uma opção: ")
+    print("0 - SAIR...")
+    opcao = int(input("Digite uma opção: "))  # Corrigido
+    return opcao  # Adicionado retorno da opção
 
-def verificar_banco(banco):# Verificam se as informações batem com as gravadas
+def verificar_banco(banco):
     return banco.lower() == "caixa"
 
 def verificar_nome(nome):
@@ -24,58 +25,43 @@ def verificar_senha(senha):
     return senha == "caixa@1234"
 
 def exibir_saldo(saldo):
-    print(f"Seu Saldo atual é R${saldo} ")
+    print(f"Seu saldo atual é R${saldo:.2f}")
 
-#FAZER AQUI DEFs: realizar_saque(saldo), realizar_transferencia(saldo), realizar_deposito(saldo)
 def realizar_saque(saldo):
-    valor = float(input("digite o valor do saque"))
+    valor = float(input("Digite o valor do saque: "))
     if valor <= saldo:
         saldo -= valor
-        print("}}}} saque efetuado com sucesso {{{{")
-        print(f"seu novo saldo {saldo}")
+        print("}}}} Saque efetuado com sucesso {{{{")
+        print(f"Seu novo saldo é R${saldo:.2f}")
     else:
         print("****SALDO INSUFICIENTE****")
+    return saldo
 
 def realizar_transferencia(saldo):
-    valor = float(input("digite o valor da transferencia"))
+    valor = float(input("Digite o valor da transferência: "))
     if valor <= saldo:
         saldo -= valor
-        print("}}}} transferencia efetuada com sucesso {{{{")
-        print(f"seu novo saldo {saldo}")
+        print("}}}} Transferência efetuada com sucesso {{{{")
+        print(f"Seu novo saldo é R${saldo:.2f}")
     else:
         print("****SALDO INSUFICIENTE****")
+    return saldo
 
 def realizar_deposito(saldo):
-    valor = float(input("Digite o valor do deposito: "))
-    conta = input("digite o numero da conta: ")
-    agencia =  input("Digite sua agencia: ")
-    confirmar = int(input(f"confirma o valor do deposito de ${valor} (1: sim, 2: nâo"))
+    valor = float(input("Digite o valor do depósito: "))
+    conta = input("Digite o número da conta: ")
+    agencia = input("Digite sua agência: ")
+    confirmar = int(input(f"Confirma o valor do depósito de R${valor:.2f}? (1: sim, 2: não): "))
     if confirmar == 1:
         saldo += valor
-        print("}}}} deposito efetuado com sucesso {{{{")
-        print("seu novo saldo é R$: {saldo}")
+        print("}}}} Depósito efetuado com sucesso {{{{")
+        print(f"Seu novo saldo é R${saldo:.2f}")
     return saldo
 
 def consulta_rendimento(saldo):
     taxa_rendimento = 0.005  
-         # Define a taxa de rendimento como 0,5% (ou seja, 0.005).
-         # Esse valor representa um rendimento simulado para o saldo.
-         # Essa taxa é fixa aqui para simplificar, mas, em uma situação real,
-         # poderia variar dependendo do tipo de investimento ou de conta.
-
     rendimento = saldo * taxa_rendimento
-       # Calcula o rendimento esperado multiplicando o saldo pela taxa de rendimento.
-       # Por exemplo, se o saldo é R$ 2.100, o rendimento é:
-       # 2100 * 0.005 = R$ 10.50.
-       # Esse valor representa o ganho que o usuário teria sobre o saldo atual
-       # em um período definido, com base na taxa fixa de 0,5%.
-
-    print(f"O Rendimento atual para o seu saldo de R${saldo} é R${rendimento}")
-        # Exibe o rendimento calculado ao usuário de forma formatada.
-        # A mensagem mostra o saldo atual e o rendimento estimado para facilitar
-        # a compreensão do crescimento potencial do saldo com essa taxa.
-        # Esse cálculo é ilustrativo e não considera impostos ou taxas adicionais.
-    
+    print(f"O rendimento atual para o seu saldo de R${saldo:.2f} é R${rendimento:.2f}")
     return saldo
 
 def main():
@@ -84,5 +70,35 @@ def main():
     banco = input("DIGITE O NOME DO BANCO: ")
     if verificar_banco(banco):
         print("----BEM VINDO AO ATENDIMENTO CAIXA----")
+        nome = input("Escreva seu nome: ")
+        senha = input("Escreva sua senha: ")
+        if verificar_nome(nome) and verificar_senha(senha):
+            print("Entrando...")
+            saldo = 2100
+            continuar = True
 
-        #FINALIZAR A VERIFICAÇAO, E AINDA POR WHILE NO FINAL
+            while continuar:
+                opcao = mostrar_menu()
+                match opcao:
+                    case 1:
+                        exibir_saldo(saldo)  # Corrigido para não tentar armazenar o retorno
+                    case 2:
+                        saldo = realizar_saque(saldo)
+                    case 3:
+                        saldo = realizar_transferencia(saldo)
+                    case 4:
+                        saldo = realizar_deposito(saldo)
+                    case 5:
+                        consulta_rendimento(saldo)
+                    case 0:
+                        print("Saindo")
+                        continuar = False
+                    case _:
+                        print("Opção inválida. Tente novamente.")
+        else:
+            print("Nome ou senha incorretos.")
+    else:
+        print("Banco inválido. Esse serviço é válido apenas para o banco Caixa.")
+
+if __name__ == "__main__":
+    main()
